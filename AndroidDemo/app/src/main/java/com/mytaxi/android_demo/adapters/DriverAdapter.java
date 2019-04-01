@@ -23,6 +23,7 @@ public class DriverAdapter extends ArrayAdapter<Driver> {
     private LayoutInflater mLayoutInflater;
     private OnDriverClickCallback mOnDriverClickCallback;
     private static final int sResource = android.R.layout.select_dialog_item;
+    public static List<Driver> suggestions;
 
     public DriverAdapter(@NonNull Context context, List<Driver> drivers, OnDriverClickCallback onDriverClickCallback) {
         super(context, sResource, drivers);
@@ -80,6 +81,7 @@ public class DriverAdapter extends ArrayAdapter<Driver> {
                         }
                     }
                 }
+                DriverAdapter.suggestions=suggestions;
                 filterResults.values = suggestions;
                 filterResults.count = suggestions.size();
                 return filterResults;

@@ -6,12 +6,10 @@ jobs:
     working_directory: ~/MobileAppAutomationTest/AndroidDemo
     steps:
       - checkout
-      
+          path: ~/MobileAppAutomationTest
       - run:
           name: Download Dependencies
-          command: | 
-                    sudo chmod +x ~/MobileAppAutomationTest/AndroidDemo/gradlew
-                    sh ~/MobileAppAutomationTest/AndroidDemo/gradlew
+          command: ./gradlew
           
 
   deploy:

@@ -6,7 +6,9 @@ jobs:
     working_directory: ~/MobileAppAutomationTest/AndroidDemo
     steps:
       - checkout
-      - run: bundle install --path vendor/bundle  # install dependencies
+      - run:
+        name: Download Dependencies
+        command: ./gradlew androidDependencies
 
   deploy:
     machine:

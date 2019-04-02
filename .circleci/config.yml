@@ -20,40 +20,22 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
                    
       - run:
-          name: Run Emulator
-          background: true
+          name: Dependencies
           command: |
-            $ANDROID_SDK_ROOT/tools/emulator -no-window -noaudio -no-boot-anim -gpu swiftshader @androidlearn
+            wget "https://services.gradle.org/distributions/gradle-2.9-bin.zip"; unzip gradle-2.9-bin.zip
+            echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
+            echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
       - run:
           name: Wait for Emulator
           no_output_timeout: 15m
-          command: |
-            sleep 15
-            $ANDROID_SDK_ROOT/platform-tools/adb devices
-            sleep 10
-      - run:
-          name: Fetch logcat and props
           background: true
+          parallel: true
           command: |
-            $ANDROID_SDK_ROOT/platform-tools/adb logcat >> ./artifacts/logcat.txt
-            $ANDROID_SDK_ROOT/platform-tools/adb shell getprop >> ./artifacts/props.txt
-      - run:
-          name: Run Android Connected Tests
-          command: |
-            export ADB_INSTALL_TIMEOUT=120
-            export ANDROID_HOME=$ANDROID_SDK_ROOT
-            # ./scripts/test.sh
-            ./gradlew assembleDebug
-            # Wait for emulator to fully boot
-            # TODO: Need to create a good check
-            sleep 60
-            # Is the emulator still running?
-            adb devices
-            # Check if package manager is running
-            adb shell pm list packages
-            # Install package
-            $ANDROID_SDK_ROOT/platform-tools/adb install ~/MobileAppAutomationTest/AndroidDemo/app/build/outputs/apk/debug/app-debug.apk
-            ./gradlew connectedAndroidTest
+            emulator -avd circleci-android22 -no-audio -no-window:
+            circle-android wait-for-boot
+            sleep 30
+            adb shell input keyevent 82
+            ./gradlew connectedAndroidTest -PdisablePreDex
           
       - store_artifacts:
           path: app/build/reports

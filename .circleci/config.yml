@@ -14,7 +14,10 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: |
+            run: yes | sdkmanager --licenses || exit 0
+            run: yes | sdkmanager --update || exit 0
+            ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle

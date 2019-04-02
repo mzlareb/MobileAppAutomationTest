@@ -7,11 +7,12 @@ jobs:
     steps:
       - checkout:
           path: ~/MobileAppAutomationTest
+          
+      - run: yes | sdkmanager --licenses
+      - run: yes | sdkmanager --update || exit 0
       - run:
           name: Download Dependencies
           command: ./gradlew
-      - run: yes | sdkmanager --licenses
-      - run: yes | sdkmanager --update || exit 0
           
 
   deploy:

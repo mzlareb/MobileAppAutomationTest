@@ -2,7 +2,38 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.4.1
+      - image: circleci/ruby:2.4-node-jessie
+      - image: circleci/postgres:9.4.12-alpine
+    working_directory: ~/MobileAppAutomationTest/AndroidDemo
     steps:
       - checkout
-      - run: echo "A first hello"
+      - run: bundle install --path vendor/bundle  # install dependencies
+      - run: bundle exec rake db:create db:schema:load  # setup database
+      - run:
+          name: Run tests
+          command: rake
+
+  deploy:
+    machine:
+        enabled: true
+    working_directory: ~/MobileAppAutomationTest/AndroidDemo
+    environment:
+      HEROKU_APP: "sleepy-refuge-55486"
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            echo "Hi"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: sequential-branch-filter

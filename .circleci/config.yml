@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Download Dependencies
           command: | 
-                    sudo chmod +x gradlew
+                    sudo chmod +x ~/MobileAppAutomationTest/AndroidDemo/gradlew
                     sh ~/MobileAppAutomationTest/AndroidDemo/gradlew
           
 

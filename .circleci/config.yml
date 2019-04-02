@@ -5,7 +5,7 @@ jobs:
       - image: circleci/android:api-26-alpha
     working_directory: ~/MobileAppAutomationTest/AndroidDemo
     steps:
-      - checkout
+      - checkout:
           path: ~/MobileAppAutomationTest
       - run:
           name: Download Dependencies

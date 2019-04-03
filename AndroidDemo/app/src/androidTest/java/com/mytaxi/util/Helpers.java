@@ -53,7 +53,7 @@ public class Helpers {
         try{
          Thread.sleep(2000);   
         } catch (Exception e2){
-            e.printStackTrace();   
+            e2.printStackTrace();   
         }
         int i = 0;
         while (i++ < 10) {

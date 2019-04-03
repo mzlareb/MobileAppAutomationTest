@@ -63,7 +63,7 @@ public class UITests {
     }
 
     @Test
-    public void searchDriverFromSuggestionsAndCall() {
+    public void searchDriverFromSuggestionsAndCall() throws Exception {
  
             helpers.login(this.username, this.password);
 

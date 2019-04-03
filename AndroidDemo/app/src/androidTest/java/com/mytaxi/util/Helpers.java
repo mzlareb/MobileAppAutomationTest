@@ -49,6 +49,12 @@ public class Helpers {
     }
 
     private static boolean waitForElementUntilDisplayed(ViewInteraction element) {
+
+        try{
+         Thread.sleep(2000);   
+        } catch (Exception e2){
+            e.printStackTrace();   
+        }
         int i = 0;
         while (i++ < 10) {
             try {

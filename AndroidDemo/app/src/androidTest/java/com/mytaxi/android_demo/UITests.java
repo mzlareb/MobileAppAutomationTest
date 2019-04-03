@@ -64,7 +64,7 @@ public class UITests {
 
     @Test
     public void searchDriverFromSuggestionsAndCall() {
-        try {
+ 
             helpers.login(this.username, this.password);
 
             //Search the Driver
@@ -82,11 +82,7 @@ public class UITests {
 
             //Call the Driver
             helpers.waitForElementUntilDisplayedAndClick(onView(withId(R.id.fab)));
-        } catch (Exception e) {
-            e.printStackTrace();
-            helpers.resetUser();
-            Assert.fail();
-        }
+  
     }
 
     @After

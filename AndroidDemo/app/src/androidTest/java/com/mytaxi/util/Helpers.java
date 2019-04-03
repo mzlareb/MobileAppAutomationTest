@@ -51,7 +51,8 @@ public class Helpers {
     private static boolean waitForElementUntilDisplayed(ViewInteraction element) {
 
         try{
-         Thread.sleep(2000);   
+            //Emulator on CircleCI is very very slow. So adding a hardcoded 10 seconds wait 
+            Thread.sleep(10000);   
         } catch (Exception e2){
             e2.printStackTrace();   
         }
